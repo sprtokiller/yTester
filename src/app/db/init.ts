@@ -11,16 +11,11 @@ const dbInit = async () => {
         {
             sub: '109297358012991804394',
             email: 'vitezslavkriz24@gmail.com'
-        },
-        {
-            sub: '109297358012991804395',
-            email: 'vitezslavkriz24@gmail.com'
         }
     ])
 
     // get all users and log them
-    const users = await User.findAll()	
-    console.log(users)
+    const users = await User.findAll()
 
     // create courses
     await Course.bulkCreate([
