@@ -9,8 +9,9 @@ export interface Course {
 }
 */
 
-import { Model, Column, Table, BelongsTo, ForeignKey, PrimaryKey, AllowNull, IsUUID } from "sequelize-typescript";
+import { Model, Column, Table, BelongsTo, ForeignKey, PrimaryKey, AllowNull, IsUUID, HasMany } from "sequelize-typescript";
 import { User } from "./User";
+import { Test } from "./Test";
 
 // @Scopes(() => ({
 //   movies: {
@@ -53,4 +54,7 @@ export class Course extends Model {
 
   @BelongsTo(() => User)
   user!: User;
+
+  @HasMany(() => Test)
+  tests!: Test[];
 }

@@ -15,3 +15,25 @@ export function logRequests(req: Request, res: Response, next: NextFunction) {
     console.log(`[${formatDate(new Date())}] ${req.method} ${req.url}`);
     next();
 }
+
+// create an enum for months
+export enum Month {
+    January = 0,
+    February,
+    March,
+    April,
+    May,
+    June,
+    July,
+    August,
+    September,
+    October,
+    November,
+    December,
+}
+
+export enum EndType {
+    PLAN = "PLAN",
+    MANUAL = "MANUAL",
+    AUTO = "AUTO"
+  }
