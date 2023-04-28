@@ -135,9 +135,5 @@ const dbInit = async () => {
             }
         ]
     })
-
-
-    // print all tests with modules
-    console.log(tests.map(t => t.toJSON()))
 }
 export default dbInit 

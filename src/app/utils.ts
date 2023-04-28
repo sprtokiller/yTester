@@ -12,6 +12,7 @@ function formatDate(date: Date) {
 }
 
 export function logRequests(req: Request, res: Response, next: NextFunction) {
+    req.session.sub = '109297358012991804394'; // TODO: temporary
     console.log(`[${formatDate(new Date())}] ${req.method} ${req.url}`);
     next();
 }

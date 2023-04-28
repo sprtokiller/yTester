@@ -49,6 +49,7 @@ async function main() {
 
   // all routes start with /api
   app.use('/api/user', require('./app/routes/user'));
+  app.use('/api/course', require('./app/routes/course'));
 
   ///app.use('/', routes);
   ///app.use(express.static('dist', { index: 'index.html' }))

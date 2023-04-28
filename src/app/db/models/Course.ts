@@ -1,14 +1,3 @@
-/*
-export interface Course {
-  courseID: number;
-  name: string;
-  author: string;
-  version: number;
-  groupHash: string;
-  courseHash: string;
-}
-*/
-
 import { Model, Column, Table, BelongsTo, ForeignKey, PrimaryKey, AllowNull, IsUUID, HasMany } from "sequelize-typescript";
 import { User } from "./User";
 import { Test } from "./Test";
