@@ -9,7 +9,8 @@ export interface Course {
 }
 */
 
-import {Model, Column, Table, CreatedAt, UpdatedAt} from "sequelize-typescript";
+import { Model, Column, Table, BelongsTo, ForeignKey, PrimaryKey, AllowNull, IsUUID } from "sequelize-typescript";
+import { User } from "./User";
 
 // @Scopes(() => ({
 //   movies: {
@@ -24,8 +25,11 @@ import {Model, Column, Table, CreatedAt, UpdatedAt} from "sequelize-typescript";
 @Table
 export class Course extends Model {
 
+  @PrimaryKey
+  @AllowNull(false)
+  @IsUUID(4)
   @Column
-  courseID!: number;
+  courseUUID!: string;
 
   @Column
   name!: string;
@@ -42,8 +46,11 @@ export class Course extends Model {
   @Column
   courseHash!: string;
 
-  // @BelongsToMany(() => Movie, () => MovieActor)
-  // movies?: Movie[];
+  @ForeignKey(() => User)
+  @AllowNull(false)
+  @Column
+  sub!: string;
 
-
+  @BelongsTo(() => User)
+  user!: User;
 }

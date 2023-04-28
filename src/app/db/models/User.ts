@@ -1,4 +1,5 @@
-import {Model, Column, Table, PrimaryKey, AllowNull} from "sequelize-typescript";
+import { Model, Column, Table, PrimaryKey, AllowNull, HasMany } from "sequelize-typescript";
+import { Course } from "./Course";
 
 @Table
 export class User extends Model {
@@ -11,5 +12,7 @@ export class User extends Model {
   @AllowNull(false)
   @Column
   email!: string;
-  
+
+  @HasMany(() => Course)
+  courses!: Course[];
 }
