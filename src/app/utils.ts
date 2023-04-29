@@ -13,8 +13,11 @@ function formatDate(date: Date) {
 
 export function logRequests(req: Request, res: Response, next: NextFunction) {
     req.session.sub = '109297358012991804394'; // TODO: temporary
+    // add a second wait to simulate network latency
     console.log(`[${formatDate(new Date())}] ${req.method} ${req.url}`);
-    next();
+    setTimeout(() => {
+        next();
+    }, 1000);
 }
 
 // create an enum for months

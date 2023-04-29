@@ -3,14 +3,13 @@ import { Request, Response } from 'express';
 import { verifyCredentials } from '../auth';
 import { ReasonPhrases as PHRASES, StatusCodes as CODE} from 'http-status-codes';
 
-import { User } from '../db/models/User'
+import { User } from '../db'
 
 const router = Router();
 
 // POST for login (register on first time)
 router.post('/login', async function (req : Request, res : Response) {
     const { googleCredential } = req.body;
-    console.log(req.session.sub);
     verifyCredentials(googleCredential).then((payload) => {
         // find user in database
         User.findOrCreate({ where: { sub: payload?.sub }, defaults: { email: payload?.email } }).then((user) => {

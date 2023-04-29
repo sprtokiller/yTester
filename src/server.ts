@@ -4,6 +4,11 @@ import cookieParser from 'cookie-parser';
 import dbInit from './app/db/init';
 import { logRequests } from './app/utils';
 import bodyParser from 'body-parser';
+import fs from 'fs';
+import path from 'path';
+
+const routesDir = path.join(__dirname, './app/routes');
+const routeFiles = fs.readdirSync(routesDir);
 
 declare module 'express-session' {
   interface SessionData {
@@ -48,8 +53,12 @@ async function main() {
   app.use(logRequests);
 
   // all routes start with /api
-  app.use('/api/user', require('./app/routes/user'));
-  app.use('/api/course', require('./app/routes/course'));
+  routeFiles.forEach(file => {
+    const filePath = path.join(routesDir, file);
+    const routeHandler = require(filePath);
+    const routePath = `/api/${file.split('.')[0]}`;
+    app.use(routePath, routeHandler);
+  });
 
   ///app.use('/', routes);
   ///app.use(express.static('dist', { index: 'index.html' }))

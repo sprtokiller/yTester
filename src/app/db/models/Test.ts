@@ -43,3 +43,17 @@ export class Test extends Model {
   @HasOne(() => Module_1)
   m1?: Module_1;
 }
+
+const MODULE_COUNT = 1;
+
+export function getModules(test: Test): number[] {
+  const modules: number[] = [];
+
+  for (let i = 1; i <= MODULE_COUNT; i++) {
+      const key = `m${i}` as keyof Test;
+      if (test[key]) {
+          modules.push(i);
+      }
+  }
+  return modules;
+}
