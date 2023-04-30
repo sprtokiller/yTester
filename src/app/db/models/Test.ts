@@ -19,7 +19,7 @@ export class Test extends Model {
   @Column
   courseUUID!: string;
 
-  @BelongsTo(() => Course)
+  @BelongsTo(() => Course, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   course!: Course;
 
   @CreatedAt
@@ -40,7 +40,7 @@ export class Test extends Model {
   @Column
   endAt?: Date;
 
-  @HasOne(() => Module_1)
+  @HasOne(() => Module_1, { onDelete: 'CASCADE' })
   m1?: Module_1;
 }
 

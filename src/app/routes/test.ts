@@ -5,6 +5,7 @@ import { ReasonPhrases as PHRASES, StatusCodes as CODE} from 'http-status-codes'
 import { ITestView } from '../interfaces';
 import { Course, Test, Module_1 } from '../db';
 import { getModules } from '../db/models/Test';
+import { errorHandle } from '../utils';
 
 const router = Router();
 
@@ -34,8 +35,7 @@ router.get('/list', checkSession, async function (req : Request, res : Response)
         });
         return res.status(CODE.OK).send(data);
     }).catch((err) => {
-        console.error(err)
-        return res.status(CODE.INTERNAL_SERVER_ERROR).send(PHRASES.INTERNAL_SERVER_ERROR);
+        return errorHandle(err, res);
     })
 })
 

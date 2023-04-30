@@ -32,6 +32,10 @@ export function checkBodyParams(params: string[]) {
     }
 }
 
+export function errorHandle(err: unknown, res: Response<any, Record<string, any>>) {
+    console.error(err);
+    return res.status(CODE.INTERNAL_SERVER_ERROR).send(PHRASES.INTERNAL_SERVER_ERROR);
+}
 
 // create an enum for months
 export enum Month {

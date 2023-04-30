@@ -41,7 +41,7 @@ export class Course extends Model {
   @Column
   sub!: string;
 
-  @BelongsTo(() => User)
+  @BelongsTo(() => User, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   user!: User;
 
   @HasMany(() => Test)
