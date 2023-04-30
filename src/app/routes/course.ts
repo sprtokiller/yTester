@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { Request, Response } from 'express';
 import { checkSession } from '../auth';
 import { ReasonPhrases as PHRASES, StatusCodes as CODE } from 'http-status-codes';
-
+import { checkBodyParams } from '../utils';
 import { Test, Course, Module_1 } from '../db';
 import { getModules } from '../db/models/Test';
 import { ICourseDetail } from '../interfaces';
@@ -23,6 +23,7 @@ router.get('/list', checkSession, async function (req: Request, res: Response) {
     })
 })
 
+// GET for course detail
 router.get('/detail/:courseUUID', checkSession, async function (req: Request, res: Response) {
     try {
         const course = await Course.findOne({
@@ -83,6 +84,29 @@ router.get('/detail/:courseUUID', checkSession, async function (req: Request, re
         return res.status(CODE.INTERNAL_SERVER_ERROR).send(PHRASES.INTERNAL_SERVER_ERROR);
     }
 });
+
+// POST for renaming course
+router.post('/rename/:courseUUID', checkSession, checkBodyParams(["courseName"]), async function (req: Request, res: Response) {
+    try {
+        // update one course
+        const course = await Course.findOne({
+            where: { courseUUID: req.params.courseUUID, sub: req.session.sub },
+            attributes: ['courseUUID', 'name', 'author', 'version', 'groupHash', 'courseHash'],
+        });
+        if (!course) {
+            return res.status(CODE.NOT_FOUND).send(PHRASES.NOT_FOUND);
+        }
+
+        course.name = req.body.courseName.trim();
+        await course.save();
+
+        return res.status(CODE.OK).send(PHRASES.OK);
+    } catch (err) {
+        console.error(err);
+        return res.status(CODE.INTERNAL_SERVER_ERROR).send(PHRASES.INTERNAL_SERVER_ERROR);
+    }
+});
+
 
 
 module.exports = router;

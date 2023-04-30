@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { ReasonPhrases as PHRASES, StatusCodes as CODE} from 'http-status-codes';
 
 function formatDate(date: Date) {
     const padTwo = (val: number) => (val > 9 ? "" : "0") + val;
@@ -19,6 +20,18 @@ export function logRequests(req: Request, res: Response, next: NextFunction) {
         next();
     }, 1000);
 }
+
+// Middleware to check request body for required fields (as specified in the params array)
+export function checkBodyParams(params: string[]) {
+    return (req: Request, res: Response, next: NextFunction) => {
+        const missingParams = params.filter(param => !req.body[param]);
+        if (missingParams.length > 0) {
+            return res.status(CODE.BAD_REQUEST).send(`Missing required parameters: ${missingParams.join(', ')}`);
+        }
+        next();
+    }
+}
+
 
 // create an enum for months
 export enum Month {
