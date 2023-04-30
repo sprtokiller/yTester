@@ -16,6 +16,6 @@ export class Module_1 extends Model {
   @Column
   testUUID!: string;
 
-  @BelongsTo(() => Test)
+  @BelongsTo(() => Test, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   test!: Test;
 }

@@ -4,6 +4,7 @@ import { verifyCredentials } from '../auth';
 import { ReasonPhrases as PHRASES, StatusCodes as CODE} from 'http-status-codes';
 
 import { User } from '../db'
+import { errorHandle } from '../utils';
 
 const router = Router();
 
@@ -32,8 +33,7 @@ router.post('/logout', async function (req : Request, res : Response) {
     console.log(req.session.sub);
     req.session.destroy((err) => {
         if (err) {
-            console.log(err)
-            return res.status(CODE.INTERNAL_SERVER_ERROR).send(PHRASES.INTERNAL_SERVER_ERROR);
+            return errorHandle(err, res);
         }
     })
 
