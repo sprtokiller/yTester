@@ -82,8 +82,8 @@ router.get('/detail/:courseUUID', checkSession, async function (req: Request, re
     }
 });
 
-// POST for renaming course
-router.post('/rename/:courseUUID', checkSession, checkBodyParams(["courseName"]), async function (req: Request, res: Response) {
+// PUT for renaming course
+router.put('/rename/:courseUUID', checkSession, checkBodyParams(["courseName"]), async function (req: Request, res: Response) {
     try {
         // update one course
         const course = await Course.findOne({
@@ -116,6 +116,24 @@ router.delete('/delete/:courseUUID', checkSession, async function (req: Request,
         await course.destroy();
 
         return res.status(CODE.OK).send(PHRASES.OK);
+    } catch (err) {
+        return errorHandle(err, res);
+    }
+});
+
+// GET route for checking if course name is unique
+router.get('/check/:groupHash/:courseHash', checkSession, async function (req: Request, res: Response) {
+    try {
+        console.log(req.params.groupHash, req.params.courseHash, req.session.sub);
+        const course = await Course.findOne({
+            where: { groupHash: req.params.groupHash, courseHash: req.params.courseHash, sub: req.session.sub },
+        });
+        
+        if (!course) {
+            return res.status(CODE.OK).send(null);
+        }
+        return res.status(CODE.OK).send(course.courseUUID);
+        
     } catch (err) {
         return errorHandle(err, res);
     }

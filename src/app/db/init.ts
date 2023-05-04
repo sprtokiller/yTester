@@ -25,7 +25,7 @@ const dbInit = async () => {
             author: 'Vítězslav Kříž',
             version: 5,
             groupHash: 'da41b34d-fbd7-4428-a4b5-7028cd401bdb',
-            courseHash: 'x76CxTXo7UHsz92k',
+            courseHash: 'items/x76CxTXo7UHsz92k/story.html',
             sub: '109297358012991804394'
         },
         {
@@ -34,7 +34,7 @@ const dbInit = async () => {
             author: 'Vítězslav Kříž',
             version: 7,
             groupHash: 'da41b34d-fbd7-4428-a4b5-7028cd401bdb',
-            courseHash: 'bxR_bN7eF90WPICq',
+            courseHash: 'items/bxR_bN7eF90WPICq/story.html',
             sub: '109297358012991804394'
         },
         {
@@ -43,7 +43,7 @@ const dbInit = async () => {
             author: 'Kateřina Chromčáková',
             version: 8,
             groupHash: 'd9fb6a33-e073-4603-aa7e-4c16b4b3b759',
-            courseHash: '1cyFXEPcCxqzyOzf',
+            courseHash: 'items/1cyFXEPcCxqzyOzf/story.html',
             sub: '109297358012991804394'
         }
     ], { validate: true })
