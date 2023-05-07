@@ -3,7 +3,7 @@ import { User } from './models/User'
 import { Test } from './models/Test'
 import { Module_1 } from './models/Module_1'
 import sql from './config';
-import { Month, EndType } from '../utils';
+import { Month, EndType, ContentType } from '../utils';
 
 const dbInit = async () => {
     // reset database
@@ -25,7 +25,8 @@ const dbInit = async () => {
             author: 'Vítězslav Kříž',
             version: 5,
             groupHash: 'da41b34d-fbd7-4428-a4b5-7028cd401bdb',
-            courseHash: 'items/x76CxTXo7UHsz92k/story.html',
+            courseLocation: 'items/x76CxTXo7UHsz92k/story.html',
+            contentType: ContentType.STORYLINE,
             sub: '109297358012991804394'
         },
         {
@@ -34,7 +35,8 @@ const dbInit = async () => {
             author: 'Vítězslav Kříž',
             version: 7,
             groupHash: 'da41b34d-fbd7-4428-a4b5-7028cd401bdb',
-            courseHash: 'items/bxR_bN7eF90WPICq/story.html',
+            courseLocation: 'items/bxR_bN7eF90WPICq/story.html',
+            contentType: ContentType.STORYLINE,
             sub: '109297358012991804394'
         },
         {
@@ -43,7 +45,8 @@ const dbInit = async () => {
             author: 'Kateřina Chromčáková',
             version: 8,
             groupHash: 'd9fb6a33-e073-4603-aa7e-4c16b4b3b759',
-            courseHash: 'items/1cyFXEPcCxqzyOzf/story.html',
+            courseLocation: 'items/1cyFXEPcCxqzyOzf/story.html',
+            contentType: ContentType.STORYLINE,
             sub: '109297358012991804394'
         }
     ], { validate: true })

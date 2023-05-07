@@ -1,4 +1,4 @@
-import { EndType } from "./utils";
+import { EndType, ContentType } from "./utils";
 
 export interface ICourse {
   courseUUID: string;
@@ -15,10 +15,11 @@ export interface ITimeSpan {
 
 export interface ICourseView extends ICourse {
   tests: ITimeSpan[];
+  contentType: ContentType;
 }
 
 export interface ICourseDetail extends ICourse {
-  courseHash: string;
+  courseLocation: string;
   tests?: ITestView[];
   otherVersions?: ICourse[];
 }

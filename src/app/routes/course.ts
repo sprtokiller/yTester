@@ -6,6 +6,7 @@ import { checkBodyParams, errorHandle } from '../utils';
 import { Test, Course, Module_1 } from '../db';
 import { getModules } from '../db/models/Test';
 import { ICourseDetail } from '../interfaces';
+import { randomUUID } from 'crypto';
 
 const router = Router();
 
@@ -13,7 +14,7 @@ const router = Router();
 router.get('/list', checkSession, async function (req: Request, res: Response) {
     Course.findAll({
         where: { sub: req.session.sub },
-        attributes: ['courseUUID', 'name', 'author', 'version', 'groupHash'],
+        attributes: ['courseUUID', 'name', 'author', 'version', 'groupHash', 'contentType'],
         include: [{ model: Test, attributes: ['startAt', 'endAt'] }],
     }).then((courses) => {
         return res.status(CODE.OK).send(courses);
@@ -27,7 +28,7 @@ router.get('/detail/:courseUUID', checkSession, async function (req: Request, re
     try {
         const course = await Course.findOne({
             where: { courseUUID: req.params.courseUUID, sub: req.session.sub },
-            attributes: ['courseUUID', 'name', 'author', 'version', 'groupHash', 'courseHash'],
+            attributes: ['courseUUID', 'name', 'author', 'version', 'groupHash', 'courseLocation'],
             include: [{
                 model: Test,
                 attributes: ['testUUID', 'name', 'courseUUID', 'createdAt', 'startAt', 'endType', 'endAt'],
@@ -44,7 +45,7 @@ router.get('/detail/:courseUUID', checkSession, async function (req: Request, re
             author: course.author,
             version: course.version,
             groupHash: course.groupHash,
-            courseHash: course.courseHash,
+            courseLocation: course.courseLocation,
             tests: []
         }
 
@@ -82,8 +83,29 @@ router.get('/detail/:courseUUID', checkSession, async function (req: Request, re
     }
 });
 
+// POST for creating course
+router.post('/add', checkSession, checkBodyParams(["name", "author", "version", "groupHash", "courseLocation"]), async function (req: Request, res: Response) {
+    try {
+        // create course
+        const course = await Course.create({
+            courseUUID: randomUUID(),
+            name: req.body.name.trim(),
+            author: req.body.author.trim(),
+            version: parseInt(req.body.version),
+            groupHash: req.body.groupHash.trim(),
+            courseLocation: req.body.courseLocation.trim(),
+            sub: req.session.sub
+        });
+
+        return res.status(CODE.CREATED).send(course.courseUUID);
+    } catch (err) {
+        return errorHandle(err, res);
+    }
+});
+
+
 // PUT for renaming course
-router.put('/rename/:courseUUID', checkSession, checkBodyParams(["courseName"]), async function (req: Request, res: Response) {
+router.put('/rename/:courseUUID', checkSession, checkBodyParams(["name"]), async function (req: Request, res: Response) {
     try {
         // update one course
         const course = await Course.findOne({
@@ -93,7 +115,7 @@ router.put('/rename/:courseUUID', checkSession, checkBodyParams(["courseName"]),
             return res.status(CODE.NOT_FOUND).send(PHRASES.NOT_FOUND);
         }
 
-        course.name = req.body.courseName.trim();
+        course.name = req.body.name.trim();
         await course.save();
 
         return res.status(CODE.OK).send(PHRASES.OK);
@@ -122,18 +144,18 @@ router.delete('/delete/:courseUUID', checkSession, async function (req: Request,
 });
 
 // GET route for checking if course name is unique
-router.get('/check/:groupHash/:courseHash', checkSession, async function (req: Request, res: Response) {
+router.get('/check/:groupHash/:courseLocation', checkSession, async function (req: Request, res: Response) {
     try {
-        console.log(req.params.groupHash, req.params.courseHash, req.session.sub);
+        console.log(req.params.groupHash, req.params.courseLocation, req.session.sub);
         const course = await Course.findOne({
-            where: { groupHash: req.params.groupHash, courseHash: req.params.courseHash, sub: req.session.sub },
+            where: { groupHash: req.params.groupHash, courseLocation: req.params.courseLocation, sub: req.session.sub },
         });
         
         if (!course) {
             return res.status(CODE.OK).send(null);
         }
         return res.status(CODE.OK).send(course.courseUUID);
-        
+
     } catch (err) {
         return errorHandle(err, res);
     }

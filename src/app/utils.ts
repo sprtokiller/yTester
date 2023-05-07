@@ -58,3 +58,11 @@ export enum EndType {
     MANUAL = "MANUAL",
     AUTO = "AUTO"
   }
+
+  // "RISE" | "STORYLINE" | "STUDIO" | "OTHER";
+export enum ContentType {
+    RISE = "RISE",
+    STORYLINE = "STORYLINE",
+    STUDIO = "STUDIO",
+    OTHER = "OTHER"
+}

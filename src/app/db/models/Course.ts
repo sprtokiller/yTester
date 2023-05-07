@@ -1,4 +1,5 @@
-import { Model, Column, Table, BelongsTo, ForeignKey, PrimaryKey, AllowNull, IsUUID, HasMany } from "sequelize-typescript";
+import { Model, Column, Table, BelongsTo, ForeignKey, PrimaryKey, AllowNull, IsUUID, HasMany, IsIn, DataType } from "sequelize-typescript";
+import { ContentType } from "../../utils";
 import { User } from "./User";
 import { Test } from "./Test";
 
@@ -34,7 +35,15 @@ export class Course extends Model {
   groupHash!: string;
 
   @Column
-  courseHash!: string;
+  courseLocation!: string;
+
+  @IsIn([Object.values(ContentType)])
+  @Column({
+    type: DataType.ENUM(...Object.values(ContentType)),
+    defaultValue: ContentType.OTHER,
+    allowNull: false
+  })
+  contentType!: ContentType;
 
   @ForeignKey(() => User)
   @AllowNull(false)
