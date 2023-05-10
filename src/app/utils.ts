@@ -12,6 +12,26 @@ function formatDate(date: Date) {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
 }
 
+export function getContentType(location: string) : ContentType{
+    // if the location with these extensions, return the corresponding ContentType
+    // /index.html -> RISE
+    // /stroy.html -> STORYLINE
+    // /interaction.html -> STUDIO
+
+    // get the file name
+    const fileName = location.split('/').pop()?.toLowerCase() || '';
+    switch (fileName) {
+        case 'index.html':
+            return ContentType.RISE;
+        case 'story.html':
+            return ContentType.STORYLINE;
+        case 'interaction.html':
+            return ContentType.STUDIO;
+        default:
+            return ContentType.OTHER;
+    }
+}
+
 export function logRequests(req: Request, res: Response, next: NextFunction) {
     req.session.sub = '109297358012991804394'; // TODO: temporary
     // add a second wait to simulate network latency

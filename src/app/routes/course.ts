@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { Request, Response } from 'express';
 import { checkSession } from '../auth';
 import { ReasonPhrases as PHRASES, StatusCodes as CODE } from 'http-status-codes';
-import { checkBodyParams, errorHandle } from '../utils';
+import { checkBodyParams, errorHandle, getContentType } from '../utils';
 import { Test, Course, Module_1 } from '../db';
 import { getModules } from '../db/models/Test';
 import { ICourseDetail } from '../interfaces';
@@ -94,6 +94,7 @@ router.post('/add', checkSession, checkBodyParams(["name", "author", "version", 
             version: parseInt(req.body.version),
             groupHash: req.body.groupHash.trim(),
             courseLocation: req.body.courseLocation.trim(),
+            contentType: getContentType(req.body.courseLocation.trim()),
             sub: req.session.sub
         });
 
