@@ -75,8 +75,7 @@ export enum Month {
 
 export enum EndType {
     PLAN = "PLAN",
-    MANUAL = "MANUAL",
-    AUTO = "AUTO"
+    MANUAL = "MANUAL"
   }
 
   // "RISE" | "STORYLINE" | "STUDIO" | "OTHER";

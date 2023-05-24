@@ -60,7 +60,7 @@ const dbInit = async () => {
             // start in past and MANUAL end -> 'Active'
             createdAt: new Date(2023, Month.March, 16, 10, 45, 16),
             startAt: new Date(2023, Month.March, 18, 8, 0, 0),
-            endType: EndType.AUTO,
+            endType: EndType.MANUAL,
         },
         {
             testUUID: '76ec0911-7a99-43a0-9d9c-ae3aa38180fc',
@@ -79,7 +79,7 @@ const dbInit = async () => {
             // start in future and MANUAL/future end -> 'Planned'
             createdAt: new Date(2023, Month.March, 17, 12, 13, 2),
             startAt: new Date(2024, Month.March, 18, 8, 0, 0),
-            endType: EndType.AUTO,
+            endType: EndType.MANUAL,
         },
         {
             testUUID: '018244af-c099-43e0-9be6-0eb928fb12d6',
@@ -98,7 +98,7 @@ const dbInit = async () => {
             // start in past and end in past -> 'Finished'
             createdAt: new Date(2023, Month.April, 9, 12, 13, 2),
             startAt: new Date(2023, Month.April, 10, 8, 0, 0),
-            endType: EndType.AUTO,
+            endType: EndType.MANUAL,
             endAt: new Date(2023, Month.April, 12, 11, 38, 55),
         },
         {
