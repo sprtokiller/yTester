@@ -10,26 +10,7 @@ import { randomUUID } from 'crypto';
 
 const router = Router();
 
-// POST for creating test
-router.post('/add', checkSession, checkBodyParams(["courseUUID", "name", "endType", "startAt", "endAt"]), async function (req: Request, res: Response) {
-    try {
-        const test = await Test.create({
-            testUUID: randomUUID(),
-            name: req.body.name.trim(),
-            courseUUID: req.body.courseUUID.trim(),
-            createdAt: new Date(),
-            startAt: new Date(req.body.startAt),
-            endType: req.body.endType.trim() === 'MANUAL' ? EndType.MANUAL : EndType.PLAN,
-            endAt: req.body.endType.trim() === 'MANUAL' ? null : new Date(req.body.endAt),
-        });
-        console.log(test);
-        return res.status(CODE.CREATED).send(test.testUUID);
-    } catch (err) {
-        return errorHandle(err, res);
-    }
-});
-
-// LIST of all tests
+// GET for list of all tests
 router.get('/list', checkSession, async function (req: Request, res: Response) {
 
     Course.findAll({
@@ -58,5 +39,54 @@ router.get('/list', checkSession, async function (req: Request, res: Response) {
         return errorHandle(err, res);
     })
 })
+
+// GET for course detail
+router.get('/detail/:testUUID', checkSession, async function (req: Request, res: Response) {
+    try {
+        const test = await Test.findOne({
+            where: { testUUID: req.params.testUUID },
+            attributes: ['testUUID', 'name', 'courseUUID', 'createdAt', 'startAt', 'endType', 'endAt'], include: [{ model: Module_1 }, { model: Course, attributes: ['name'] }]
+        });
+
+        if (!test) {
+            return res.status(CODE.NOT_FOUND).send(PHRASES.NOT_FOUND);
+        }
+        console.log(test);
+        
+        const testDetail: ITestView = {
+            testUUID: test.testUUID,
+            name: test.name,
+            courseUUID: test.courseUUID,
+            createdAt: test.createdAt,
+            startAt: test.startAt,
+            endType: test.endType,
+            endAt: test.endAt,
+            modules: getModules(test)
+        }
+
+        return res.status(CODE.OK).send(testDetail);
+    } catch (err) {
+        return errorHandle(err, res);
+    }
+});
+
+// POST for creating test
+router.post('/add', checkSession, checkBodyParams(["courseUUID", "name", "endType", "startAt", "endAt"]), async function (req: Request, res: Response) {
+    try {
+        const test = await Test.create({
+            testUUID: randomUUID(),
+            name: req.body.name.trim(),
+            courseUUID: req.body.courseUUID.trim(),
+            createdAt: new Date(),
+            startAt: new Date(req.body.startAt),
+            endType: req.body.endType.trim() === 'MANUAL' ? EndType.MANUAL : EndType.PLAN,
+            endAt: req.body.endType.trim() === 'MANUAL' ? null : new Date(req.body.endAt),
+        });
+        console.log(test);
+        return res.status(CODE.CREATED).send(test.testUUID);
+    } catch (err) {
+        return errorHandle(err, res);
+    }
+});
 
 module.exports = router;
