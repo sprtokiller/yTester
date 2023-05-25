@@ -10,7 +10,7 @@ import { randomUUID } from 'crypto';
 
 const router = Router();
 
-// GET for list of courses
+// [L] GET for list of courses
 router.get('/list', checkSession, async function (req: Request, res: Response) {
     Course.findAll({
         where: { sub: req.session.sub },
@@ -23,7 +23,7 @@ router.get('/list', checkSession, async function (req: Request, res: Response) {
     })
 })
 
-// GET for course detail
+// [R] GET for course detail
 router.get('/detail/:courseUUID', checkSession, async function (req: Request, res: Response) {
     try {
         const course = await Course.findOne({
@@ -83,7 +83,7 @@ router.get('/detail/:courseUUID', checkSession, async function (req: Request, re
     }
 });
 
-// POST for creating course
+// [C] POST for creating course
 router.post('/add', checkSession, checkBodyParams(["name", "author", "version", "groupHash", "courseLocation"]), async function (req: Request, res: Response) {
     try {
         // create course

@@ -1,6 +1,7 @@
-import { Model, Column, Table, PrimaryKey, AllowNull, IsUUID, BelongsToMany } from "sequelize-typescript";
+import { Model, Column, Table, PrimaryKey, AllowNull, IsUUID, BelongsToMany, ForeignKey } from "sequelize-typescript";
 import { Group } from "./Group";
 import { TesterGroup } from "./TesterGroup";
+import { User } from "./User";
 
 @Table
 export class Tester extends Model {
@@ -22,4 +23,8 @@ export class Tester extends Model {
 
   @BelongsToMany(() => Group, () => TesterGroup)
   groups?: Group[];
+
+  @ForeignKey(() => User)
+  @Column
+  sub!: string;
 }

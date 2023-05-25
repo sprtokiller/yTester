@@ -1,6 +1,10 @@
-import { User } from './models/User';
+import { AnonymousTester } from './models/AnonymousTester';
 import { Course } from './models/Course';
-import { Test } from './models/Test';
+import { Group } from './models/Group';
 import { Module_1 } from './models/Module_1';
+import { Test } from './models/Test';
+import { Tester } from './models/Tester';
+import { TesterGroup } from './models/TesterGroup';
+import { User } from './models/User';
 
-export { User, Course, Test, Module_1 };
+export { AnonymousTester, Course, Group, Module_1, Test, Tester, TesterGroup, User };

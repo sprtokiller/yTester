@@ -39,15 +39,13 @@ export interface ITestView extends ITest {
 }
 
 export interface ITester {
-  userUUID: string;
-  firstname?: string;
-  lastname?: string;
-  email?: string;
+  testerUUID: string
+  firstname?: string
+  lastname?: string
+  email?: string
 }
 
-export interface ITesterGroup {
-  name: string;
-  userUUIDs: ITester[];
-  groupUUID: string;
-  colorID: number;
+export interface IGroup {
+  groupName: string
+  groupUUID: string
 }

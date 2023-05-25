@@ -142,25 +142,29 @@ const dbInit = async () => {
       testerUUID: '86039e02-4edc-4607-a498-207789db36fc',
       firstname: 'Martin',
       lastname: 'Kocich',
-      email: 'kocichmartin@gmail.com'
+      email: 'kocichmartin@gmail.com',
+      sub: '109297358012991804394'
     },
     {
       testerUUID: 'b00be129-4e13-414d-b16b-8be8adba3cb2',
       firstname: 'Kateřina',
       lastname: 'Balíková',
-      email: 'katerina.balikova@fake.com'
+      email: 'katerina.balikova@fake.com',
+      sub: '109297358012991804394'
     },
     {
       testerUUID: '2cc1ede9-f9a8-468c-9b12-e248ea7d0bb2',
       firstname: 'Petr',
       lastname: 'Kozák',
-      email: 'petr.kozak@fake.com'
+      email: 'petr.kozak@fake.com',
+      sub: '109297358012991804394'
     },
     {
       testerUUID: '153acd8f-f5dc-4ce5-8886-28e24bf4ce57',
       firstname: 'Vítězslav',
       lastname: 'Kříž',
-      email: 'sprtokiller.6c@gmail.com'
+      email: 'sprtokiller.6c@gmail.com',
+      sub: '109297358012991804394'
     }
   ], { validate: true })
 
@@ -168,27 +172,33 @@ const dbInit = async () => {
   await Group.bulkCreate([
     {
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e053',
-      groupName: 'Group with all testers 1'
+      groupName: 'Group with all testers 1',
+      sub: '109297358012991804394'
     },
     {
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e054',
-      groupName: 'Group with all testers 2'
+      groupName: 'Group with all testers 2',
+      sub: '109297358012991804394'
     },
     {
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e055',
-      groupName: 'Group with 3 anonymous testers'
+      groupName: 'Group with 3 anonymous testers',
+      sub: '109297358012991804394'
     },
     {
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e056',
-      groupName: 'Group with 2 anonymous testers'
+      groupName: 'Group with 2 anonymous testers',
+      sub: '109297358012991804394'
     },
     {
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e057',
-      groupName: 'Group with 2 testers and 1 anonymous'
+      groupName: 'Group with 2 testers and 1 anonymous',
+      sub: '109297358012991804394'
     },
     {
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e058',
-      groupName: 'Group with all testers and 8 anonymous'
+      groupName: 'Group with all testers and 8 anonymous',
+      sub: '109297358012991804394'
     }
   ], { validate: true })
 

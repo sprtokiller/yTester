@@ -1,5 +1,7 @@
 import { Model, Column, Table, PrimaryKey, AllowNull, HasMany } from "sequelize-typescript";
 import { Course } from "./Course";
+import { Tester } from "./Tester";
+import { Group } from "./Group";
 
 @Table
 export class User extends Model {
@@ -15,4 +17,10 @@ export class User extends Model {
 
   @HasMany(() => Course)
   courses!: Course[];
+
+  @HasMany(() => Tester)
+  testers!: Tester[];
+
+  @HasMany(() => Group)
+  groups!: Group[];
 }
