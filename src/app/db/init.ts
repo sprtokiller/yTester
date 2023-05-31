@@ -10,6 +10,7 @@ import { AnonymousTester } from './models/AnonymousTester'
 
 import sql from './config';
 import { Month, EndType, ContentType } from '../utils';
+import { randomUUID } from 'crypto'
 
 const dbInit = async () => {
   // reset database
@@ -167,6 +168,16 @@ const dbInit = async () => {
       sub: '109297358012991804394'
     }
   ], { validate: true })
+  // create 60 testers
+  for (let i = 0; i < 600; i++) {
+    await Tester.create({
+      testerUUID: randomUUID(),
+      firstname: 'Tester',
+      lastname: i.toString(),
+      email: `fake${i}@gmail.com`,
+      sub: '109297358012991804394'
+    })
+  }
 
   // create groups
   await Group.bulkCreate([
@@ -270,57 +281,62 @@ const dbInit = async () => {
   await AnonymousTester.bulkCreate([
     // group 3 - 3 anonymous testers
     {
-      testerUUID: '030f2763-f39e-486f-9389-d7ba13e5c5d7',
+      anonymousTesterUUID: '030f2763-f39e-486f-9389-d7ba13e5c5d7',
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e055'
     },
     {
-      testerUUID: '188d3f88-0e7b-4add-841c-af1042ad43be',
+      anonymousTesterUUID: '188d3f88-0e7b-4add-841c-af1042ad43be',
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e055'
     },
     {
-      testerUUID: 'cecb2d1d-6f2a-4b0e-8863-26460630f550',
+      anonymousTesterUUID: 'cecb2d1d-6f2a-4b0e-8863-26460630f550',
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e055'
     },
     // group 4 - 2 anonymous testers
     {
-      testerUUID: '3a3c05ad-b0fc-4bb3-b943-ec8f423fb5dc',
+      anonymousTesterUUID: '3a3c05ad-b0fc-4bb3-b943-ec8f423fb5dc',
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e056'
     },
     {
-      testerUUID: '7202594d-0f54-431b-91f3-6ae8c62416b7',
+      anonymousTesterUUID: '7202594d-0f54-431b-91f3-6ae8c62416b7',
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e056'
+    },
+    // group 5 - 1 anonymous tester
+    {
+      anonymousTesterUUID: 'aab5cb8e-5e71-47c3-9d90-dc611ebf2053',
+      groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e057'
     },
     // group 6 - 8 anonymous testers
     {
-      testerUUID: 'c076c763-b8be-4fdc-821d-226308b1a30e',
+      anonymousTesterUUID: 'c076c763-b8be-4fdc-821d-226308b1a30e',
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e058'
     },
     {
-      testerUUID: 'a2b5cb8e-5e71-47c3-9d90-dc611ebf2053',
+      anonymousTesterUUID: 'a2b5cb8e-5e71-47c3-9d90-dc611ebf2053',
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e058'
     },
     {
-      testerUUID: '9e580308-28b6-4ad1-98f5-6d8bc7b1cce9',
+      anonymousTesterUUID: '9e580308-28b6-4ad1-98f5-6d8bc7b1cce9',
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e058'
     },
     {
-      testerUUID: 'c96d312d-4863-449b-a0ba-44823f0803c1',
+      anonymousTesterUUID: 'c96d312d-4863-449b-a0ba-44823f0803c1',
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e058'
     },
     {
-      testerUUID: 'a0c930cd-41a8-4e76-a8ea-4cc8510f5504',
+      anonymousTesterUUID: 'a0c930cd-41a8-4e76-a8ea-4cc8510f5504',
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e058'
     },
     {
-      testerUUID: 'f664bc65-246a-44fd-96b2-38da5acd1ca2',
+      anonymousTesterUUID: 'f664bc65-246a-44fd-96b2-38da5acd1ca2',
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e058'
     },
     {
-      testerUUID: '66c28934-6aa9-459f-ada4-07a914cf1ead',
+      anonymousTesterUUID: '66c28934-6aa9-459f-ada4-07a914cf1ead',
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e058'
     },
     {
-      testerUUID: '8c966715-1d71-48f3-b3c8-5907490bfb90',
+      anonymousTesterUUID: '8c966715-1d71-48f3-b3c8-5907490bfb90',
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e058'
     }
   ], { validate: true })

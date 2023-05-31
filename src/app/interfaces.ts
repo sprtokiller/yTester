@@ -49,3 +49,8 @@ export interface IGroup {
   groupName: string
   groupUUID: string
 }
+
+export interface IGroupView extends IGroup {
+  groupAnonymousCount: number,
+  groupTestersCount: number
+}

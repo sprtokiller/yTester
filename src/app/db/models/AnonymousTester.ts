@@ -8,7 +8,7 @@ export class AnonymousTester extends Model {
   @AllowNull(false)
   @IsUUID(4)
   @Column
-  testerUUID!: string;
+  anonymousTesterUUID!: string;
 
   @ForeignKey(() => Group)
   @AllowNull(false)
