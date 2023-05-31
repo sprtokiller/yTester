@@ -21,7 +21,7 @@ router.post('/add', checkSession, async function (req: Request, res: Response) {
       sub: req.session.sub
     });
 
-    return res.status(CODE.CREATED).send(tester);
+    return res.status(CODE.CREATED).send(tester.testerUUID);
   } catch (err) {
     return errorHandle(err, res);
   } 
