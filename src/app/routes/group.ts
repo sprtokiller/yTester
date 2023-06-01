@@ -3,11 +3,11 @@ import { Request, Response } from 'express';
 import { checkSession } from '../auth';
 import { ReasonPhrases as PHRASES, StatusCodes as CODE } from 'http-status-codes';
 import { IGroupView } from '../interfaces';
-import { Tester, AnonymousTester, Group } from '../db';
+import { Tester, AnonymousTester, Group, TesterGroup } from '../db';
 import { getModules } from '../db/models/Test';
 import { checkBodyParams, errorHandle, EndType } from '../utils';
 import { randomUUID } from 'crypto';
-import { fn, col } from 'sequelize';
+import { Op } from 'sequelize';
 
 const router = Router();
 
@@ -36,6 +36,62 @@ router.post('/add', checkSession, async function (req: Request, res: Response) {
   } catch (err) {
     return errorHandle(err, res);
   } 
+});
+
+// [R] GET for getting list of named testers in group
+router.get('/testers/:groupUUID', checkSession, async function (req: Request, res: Response) {
+  try {
+    const testers = await Group.findOne({
+      where: { groupUUID: req.params.groupUUID, sub: req.session.sub },
+      attributes: [],
+      include: [
+        { model: Tester, attributes: ['testerUUID'] },
+      ],
+    });
+
+    if (!testers || !testers.testers) {
+      return res.status(CODE.OK).send([]);
+    }
+
+    let testerUUIDs = [];
+    for (let tester of testers.testers) {
+      testerUUIDs.push(tester.testerUUID);
+    }
+
+    return res.status(CODE.OK).send(testerUUIDs);
+  } catch (err) {
+    return errorHandle(err, res);
+  }
+});
+
+// [U] PUT for updating testers in group
+router.put('/testers/:groupUUID', checkSession, checkBodyParams(['testerUUIDs']), async function (req: Request, res: Response) {
+  try {
+    // delete all TesterGroup entries for this group, unless they are in the new list
+    await TesterGroup.destroy({
+      where: {
+        groupUUID: req.params.groupUUID,
+        testerUUID: { [Op.notIn]: req.body.testerUUIDs }
+      }
+    });
+
+    // add all new testers to the group
+    let testerGroups = [];
+    for (let testerUUID of req.body.testerUUIDs) {
+      testerGroups.push({
+        testerUUID: testerUUID,
+        groupUUID: req.params.groupUUID
+      });
+    }
+
+    await TesterGroup.bulkCreate(testerGroups, {
+      ignoreDuplicates: true
+    });
+
+    return res.status(CODE.OK).send(PHRASES.OK);
+  } catch (err) {
+    return errorHandle(err, res);
+  }
 });
 
 
