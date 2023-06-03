@@ -15,6 +15,6 @@ export class AnonymousTester extends Model {
   @Column
   groupUUID!: string;
 
-  @BelongsTo(() => Group)
+  @BelongsTo(() => Group, { onDelete: 'CASCADE' })
   group!: Group;
 }
