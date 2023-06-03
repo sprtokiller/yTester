@@ -12,25 +12,18 @@ import { Op } from 'sequelize';
 const router = Router();
 
 // [C] POST for creating new tester group
-router.post('/add', checkSession, async function (req: Request, res: Response) {
+router.post('/add', checkSession, checkBodyParams(['groupName']), async function (req: Request, res: Response) {
   try {
+    if (req.body.groupAnonymousCount < 0 || req.body.groupAnonymousCount > 1000 || !Number.isInteger(req.body.groupAnonymousCount)) {
+      return res.status(CODE.BAD_REQUEST).send('Invalid groupAnonymousCount');
+    }
+
     const group = await Group.create({
       groupUUID: randomUUID(),
       groupName: req.body.groupName,
+      anonymousTesterCount: req.body.groupAnonymousCount,
       sub: req.session.sub
     });
-
-    // create and add anonymous testers
-    if (req.body.groupAnonymousCount && req.body.groupAnonymousCount > 0 && req.body.groupAnonymousCount <= 1000) {
-      let anonymousTesters = [];
-      for (let i = 0; i < req.body.groupAnonymousCount; i++) {
-        anonymousTesters.push({
-          anonymousTesterUUID: randomUUID(),
-          groupUUID: group.groupUUID
-        });
-      }
-      await AnonymousTester.bulkCreate(anonymousTesters);
-    }
 
     return res.status(CODE.CREATED).send(group.groupUUID);
   } catch (err) {
@@ -118,19 +111,17 @@ router.delete('/delete/:groupUUID', checkSession, async function (req: Request, 
 router.get('/list', checkSession, async function (req: Request, res: Response) {
   Group.findAll({
     where: { sub: req.session.sub },
-    attributes: ['groupUUID', 'groupName'],
+    attributes: ['groupUUID', 'groupName', 'anonymousTesterCount'],
     include: [
       { model: Tester, attributes: ['testerUUID'] },
-      { model: AnonymousTester, attributes: ['anonymousTesterUUID'] }
     ],
   }).then((groups) => {
-    var shortGroups : IGroupView[] = [];
-    
+    var shortGroups : IGroupView[] = [];    
     groups.forEach(group => {
       shortGroups.push({
         groupUUID : group.groupUUID,
         groupName : group.groupName,
-        groupAnonymousCount : group.anonymousTesters?.length ?? 0,
+        groupAnonymousCount : group.anonymousTesterCount,
         groupTestersCount : group.testers?.length ?? 0
       })
     });

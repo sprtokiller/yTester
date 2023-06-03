@@ -62,7 +62,7 @@ const dbInit = async () => {
   await Test.bulkCreate([
     {
       testUUID: 'cfcd95eb-4c13-4432-9a96-1892b4268b97',
-      name: 'Test 01 of \'Tvorba WWW stránek 1\' (version 8)',
+      name: ':) Test 01 of \'Tvorba WWW stránek 1\' (version 8)',
       courseUUID: 'cd2654ab-be0e-4bdb-b4b3-41c968354291',
       // start in past and MANUAL end -> 'Active'
       createdAt: new Date(2023, Month.March, 16, 10, 45, 16),
@@ -81,7 +81,7 @@ const dbInit = async () => {
     },
     {
       testUUID: '51e60bef-24d7-48a2-9e27-4e3f7e6c9fff',
-      name: 'Test 03 of \'Tvorba WWW stránek 1\' (version 8)',
+      name: ':) Test 03 of \'Tvorba WWW stránek 1\' (version 8)',
       courseUUID: 'cd2654ab-be0e-4bdb-b4b3-41c968354291',
       // start in future and MANUAL/future end -> 'Planned'
       createdAt: new Date(2023, Month.March, 17, 12, 13, 2),
@@ -100,7 +100,7 @@ const dbInit = async () => {
     },
     {
       testUUID: 'dcc0c679-3ae1-473a-a042-b7c72fb9b553',
-      name: 'Test 02 of \'xAPI_simple\' (version 7)',
+      name: ':) Test 02 of \'xAPI_simple\' (version 7)',
       courseUUID: '5e06909d-12ff-4c50-a460-c28d9eca69b7',
       // start in past and end in past -> 'Finished'
       createdAt: new Date(2023, Month.April, 9, 12, 13, 2),
@@ -184,31 +184,37 @@ const dbInit = async () => {
     {
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e053',
       groupName: 'Group with all testers 1',
+      anonymousTesterCount: 0,
       sub: '109297358012991804394'
     },
     {
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e054',
       groupName: 'Group with all testers 2',
+      anonymousTesterCount: 0,
       sub: '109297358012991804394'
     },
     {
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e055',
       groupName: 'Group with 3 anonymous testers',
+      anonymousTesterCount: 3,
       sub: '109297358012991804394'
     },
     {
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e056',
       groupName: 'Group with 2 anonymous testers',
+      anonymousTesterCount: 2,
       sub: '109297358012991804394'
     },
     {
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e057',
       groupName: 'Group with 2 testers and 1 anonymous',
+      anonymousTesterCount: 1,
       sub: '109297358012991804394'
     },
     {
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e058',
       groupName: 'Group with all testers and 8 anonymous',
+      anonymousTesterCount: 8,
       sub: '109297358012991804394'
     }
   ], { validate: true })
@@ -279,66 +285,37 @@ const dbInit = async () => {
 
   // create anonymous testers
   await AnonymousTester.bulkCreate([
-    // group 3 - 3 anonymous testers
+    // group 3 - 3 anonymous testers into test :) Test 01 of \'Tvorba WWW stránek 1\' (version 8)
     {
       anonymousTesterUUID: '030f2763-f39e-486f-9389-d7ba13e5c5d7',
-      groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e055'
+      testUUID: 'cfcd95eb-4c13-4432-9a96-1892b4268b97'
     },
     {
       anonymousTesterUUID: '188d3f88-0e7b-4add-841c-af1042ad43be',
-      groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e055'
+      testUUID: 'cfcd95eb-4c13-4432-9a96-1892b4268b97'
     },
     {
       anonymousTesterUUID: 'cecb2d1d-6f2a-4b0e-8863-26460630f550',
-      groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e055'
+      testUUID: 'cfcd95eb-4c13-4432-9a96-1892b4268b97'
     },
-    // group 4 - 2 anonymous testers
+    // group 4 - 2 anonymous testers into test :) Test 03 of \'Tvorba WWW stránek 1\' (version 8)
     {
       anonymousTesterUUID: '3a3c05ad-b0fc-4bb3-b943-ec8f423fb5dc',
-      groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e056'
+      testUUID: '51e60bef-24d7-48a2-9e27-4e3f7e6c9fff',
     },
     {
       anonymousTesterUUID: '7202594d-0f54-431b-91f3-6ae8c62416b7',
-      groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e056'
+      testUUID: '51e60bef-24d7-48a2-9e27-4e3f7e6c9fff',
     },
-    // group 5 - 1 anonymous tester
+    // group 4 - 2 anonymous testers into test ':) Test 02 of \'xAPI_simple\' (version 7)'
     {
-      anonymousTesterUUID: 'aab5cb8e-5e71-47c3-9d90-dc611ebf2053',
-      groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e057'
-    },
-    // group 6 - 8 anonymous testers
-    {
-      anonymousTesterUUID: 'c076c763-b8be-4fdc-821d-226308b1a30e',
-      groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e058'
+      anonymousTesterUUID: '7c0bcbe0-7471-45dc-8319-c1efab8d615d',
+      testUUID: 'dcc0c679-3ae1-473a-a042-b7c72fb9b553',
     },
     {
-      anonymousTesterUUID: 'a2b5cb8e-5e71-47c3-9d90-dc611ebf2053',
-      groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e058'
+      anonymousTesterUUID: 'e94e92d0-2669-4443-9522-7393d0f08080',
+      testUUID: 'dcc0c679-3ae1-473a-a042-b7c72fb9b553',
     },
-    {
-      anonymousTesterUUID: '9e580308-28b6-4ad1-98f5-6d8bc7b1cce9',
-      groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e058'
-    },
-    {
-      anonymousTesterUUID: 'c96d312d-4863-449b-a0ba-44823f0803c1',
-      groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e058'
-    },
-    {
-      anonymousTesterUUID: 'a0c930cd-41a8-4e76-a8ea-4cc8510f5504',
-      groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e058'
-    },
-    {
-      anonymousTesterUUID: 'f664bc65-246a-44fd-96b2-38da5acd1ca2',
-      groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e058'
-    },
-    {
-      anonymousTesterUUID: '66c28934-6aa9-459f-ada4-07a914cf1ead',
-      groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e058'
-    },
-    {
-      anonymousTesterUUID: '8c966715-1d71-48f3-b3c8-5907490bfb90',
-      groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e058'
-    }
   ], { validate: true })
 
 }

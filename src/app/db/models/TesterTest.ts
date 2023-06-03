@@ -1,13 +1,13 @@
 import { Model, Column, Table, ForeignKey } from "sequelize-typescript";
-import { Group } from "./Group";
+import { Test } from "./Test";
 import { Tester } from "./Tester";
 
 @Table
-export class TesterGroup extends Model {
+export class TesterTest extends Model {
 
-  @ForeignKey(() => Group)
+  @ForeignKey(() => Test)
   @Column
-  groupUUID!: string;
+  testUUID!: string;
 
   @ForeignKey(() => Tester)
   @Column

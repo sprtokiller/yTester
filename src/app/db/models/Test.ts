@@ -1,6 +1,9 @@
-import { Model, Column, Table, BelongsTo, ForeignKey, PrimaryKey, AllowNull, IsUUID, CreatedAt, IsIn, DataType, HasOne } from "sequelize-typescript";
-import { Course } from "./Course";
+import { Model, Column, Table, BelongsTo, ForeignKey, PrimaryKey, AllowNull, IsUUID, CreatedAt, IsIn, DataType, HasOne, HasMany, BelongsToMany } from "sequelize-typescript";
 import { EndType } from "../../utils";
+import { AnonymousTester } from "./AnonymousTester";
+import { Tester } from "./Tester";
+import { TesterTest } from "./TesterTest";
+import { Course } from "./Course";
 import { Module_1 } from "./Module_1";
 
 @Table
@@ -39,6 +42,12 @@ export class Test extends Model {
 
   @Column
   endAt?: Date;
+
+  @BelongsToMany(() => Tester, () => TesterTest)
+  testers?: Tester[];
+
+  @HasMany(() => AnonymousTester)
+  anonymousTesters?: AnonymousTester[];
 
   @HasOne(() => Module_1, { onDelete: 'CASCADE' })
   m1?: Module_1;

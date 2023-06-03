@@ -1,5 +1,5 @@
 import { Model, Column, Table, PrimaryKey, AllowNull, IsUUID, BelongsTo, ForeignKey } from "sequelize-typescript";
-import { Group } from "./Group";
+import { Test } from "./Test";
 
 @Table
 export class AnonymousTester extends Model {
@@ -10,11 +10,11 @@ export class AnonymousTester extends Model {
   @Column
   anonymousTesterUUID!: string;
 
-  @ForeignKey(() => Group)
+  @ForeignKey(() => Test)
   @AllowNull(false)
   @Column
-  groupUUID!: string;
+  testUUID!: string;
 
-  @BelongsTo(() => Group, { onDelete: 'CASCADE' })
-  group!: Group;
+  @BelongsTo(() => Test, { onDelete: 'CASCADE' })
+  test!: Test;
 }
