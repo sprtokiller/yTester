@@ -20,10 +20,6 @@ export class Group extends Model {
   @BelongsToMany(() => Tester, () => TesterGroup)
   testers?: Tester[];
 
-  @AllowNull(false)
-  @Column
-  anonymousTesterCount!: number;
-
   @ForeignKey(() => User)
   @Column
   sub!: string;

@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { checkSession } from '../auth';
 import { ReasonPhrases as PHRASES, StatusCodes as CODE } from 'http-status-codes';
 import { ITestView } from '../interfaces';
-import { Course, Test, Module_1 } from '../db';
+import { Course, Test, AnonymousTester, Module_1, TesterTest } from '../db';
 import { getModules } from '../db/models/Test';
 import { checkBodyParams, errorHandle, EndType } from '../utils';
 import { randomUUID } from 'crypto';
@@ -71,7 +71,12 @@ router.get('/detail/:testUUID', checkSession, async function (req: Request, res:
 });
 
 // POST for creating test
-router.post('/add', checkSession, checkBodyParams(["courseUUID", "name", "endType", "startAt", "endAt"]), async function (req: Request, res: Response) {
+router.post('/add', checkSession, checkBodyParams(["courseUUID", "name", "endType", "startAt", "endAt", "testerUUIDs"]), async function (req: Request, res: Response) {
+    console.log(req.body);
+    if (req.body.anonymousCount < 0 || req.body.anonymousCount > 1000 || !Number.isInteger(req.body.anonymousCount)) {
+        return res.status(CODE.BAD_REQUEST).send('Invalid anonymousCount');
+    }
+
     try {
         const test = await Test.create({
             testUUID: randomUUID(),
@@ -82,7 +87,21 @@ router.post('/add', checkSession, checkBodyParams(["courseUUID", "name", "endTyp
             endType: req.body.endType.trim() === 'MANUAL' ? EndType.MANUAL : EndType.PLAN,
             endAt: req.body.endType.trim() === 'MANUAL' ? null : new Date(req.body.endAt),
         });
-        console.log(test);
+
+        // add Anonymous testers
+        let anonymousTesters = [];
+        for (let i = 0; i < req.body.anonymousCount; i++) {
+            anonymousTesters.push({ testUUID: test.testUUID, anonymousTesterUUID: randomUUID() });
+        }
+        await AnonymousTester.bulkCreate(anonymousTesters);
+
+        // add testers
+        let testers = [];
+        for (let i = 0; i < req.body.testerUUIDs.length; i++) {
+            testers.push({ testUUID: test.testUUID, testerUUID: req.body.testerUUIDs[i] });
+        }
+        await TesterTest.bulkCreate(testers);
+
         return res.status(CODE.CREATED).send(test.testUUID);
     } catch (err) {
         return errorHandle(err, res);

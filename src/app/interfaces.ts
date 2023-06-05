@@ -51,6 +51,5 @@ export interface IGroup {
 }
 
 export interface IGroupView extends IGroup {
-  groupAnonymousCount: number,
   groupTestersCount: number
 }

@@ -168,6 +168,7 @@ const dbInit = async () => {
       sub: '109297358012991804394'
     }
   ], { validate: true })
+  
   // create 60 testers
   for (let i = 0; i < 600; i++) {
     await Tester.create({
@@ -184,39 +185,18 @@ const dbInit = async () => {
     {
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e053',
       groupName: 'Group with all testers 1',
-      anonymousTesterCount: 0,
       sub: '109297358012991804394'
     },
     {
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e054',
       groupName: 'Group with all testers 2',
-      anonymousTesterCount: 0,
-      sub: '109297358012991804394'
-    },
-    {
-      groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e055',
-      groupName: 'Group with 3 anonymous testers',
-      anonymousTesterCount: 3,
-      sub: '109297358012991804394'
-    },
-    {
-      groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e056',
-      groupName: 'Group with 2 anonymous testers',
-      anonymousTesterCount: 2,
       sub: '109297358012991804394'
     },
     {
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e057',
-      groupName: 'Group with 2 testers and 1 anonymous',
-      anonymousTesterCount: 1,
+      groupName: 'Group with 2 testers',
       sub: '109297358012991804394'
     },
-    {
-      groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e058',
-      groupName: 'Group with all testers and 8 anonymous',
-      anonymousTesterCount: 8,
-      sub: '109297358012991804394'
-    }
   ], { validate: true })
 
   // create group-tester relations
@@ -263,23 +243,6 @@ const dbInit = async () => {
     {
       groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e057',
       testerUUID: '153acd8f-f5dc-4ce5-8886-28e24bf4ce57'
-    },
-    // assign all testers to 6th group
-    {
-      groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e058',
-      testerUUID: '86039e02-4edc-4607-a498-207789db36fc'
-    },
-    {
-      groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e058',
-      testerUUID: 'b00be129-4e13-414d-b16b-8be8adba3cb2'
-    },
-    {
-      groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e058',
-      testerUUID: '2cc1ede9-f9a8-468c-9b12-e248ea7d0bb2'
-    },
-    {
-      groupUUID: 'c2c3043f-4e92-4385-94be-0b810a87e058',
-      testerUUID: '153acd8f-f5dc-4ce5-8886-28e24bf4ce57'
     }
   ], { validate: true })
 
@@ -318,5 +281,6 @@ const dbInit = async () => {
     },
   ], { validate: true })
 
+    //TODO: Assign named testers
 }
 export default dbInit 

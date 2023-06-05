@@ -14,14 +14,9 @@ const router = Router();
 // [C] POST for creating new tester group
 router.post('/add', checkSession, checkBodyParams(['groupName']), async function (req: Request, res: Response) {
   try {
-    if (req.body.groupAnonymousCount < 0 || req.body.groupAnonymousCount > 1000 || !Number.isInteger(req.body.groupAnonymousCount)) {
-      return res.status(CODE.BAD_REQUEST).send('Invalid groupAnonymousCount');
-    }
-
     const group = await Group.create({
       groupUUID: randomUUID(),
       groupName: req.body.groupName,
-      anonymousTesterCount: req.body.groupAnonymousCount,
       sub: req.session.sub
     });
 
@@ -111,7 +106,7 @@ router.delete('/delete/:groupUUID', checkSession, async function (req: Request, 
 router.get('/list', checkSession, async function (req: Request, res: Response) {
   Group.findAll({
     where: { sub: req.session.sub },
-    attributes: ['groupUUID', 'groupName', 'anonymousTesterCount'],
+    attributes: ['groupUUID', 'groupName'],
     include: [
       { model: Tester, attributes: ['testerUUID'] },
     ],
@@ -121,7 +116,6 @@ router.get('/list', checkSession, async function (req: Request, res: Response) {
       shortGroups.push({
         groupUUID : group.groupUUID,
         groupName : group.groupName,
-        groupAnonymousCount : group.anonymousTesterCount,
         groupTestersCount : group.testers?.length ?? 0
       })
     });
