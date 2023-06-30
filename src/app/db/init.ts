@@ -5,6 +5,7 @@ import { Module_1 } from './models/Module_1'
 
 import { Tester } from './models/Tester'
 import { Group } from './models/Group'
+import { TesterTest } from './models/TesterTest'
 import { TesterGroup } from './models/TesterGroup'
 import { AnonymousTester } from './models/AnonymousTester'
 
@@ -38,11 +39,11 @@ const dbInit = async () => {
     },
     {
       courseUUID: '5e06909d-12ff-4c50-a460-c28d9eca69b7',
-      name: 'xAPI_simple',
+      name: 'Sample xAPI course',
       author: 'Vítězslav Kříž',
-      version: 7,
+      version: 27,
       groupHash: 'da41b34d-fbd7-4428-a4b5-7028cd401bdb',
-      courseLocation: 'items/bxR_bN7eF90WPICq/story.html',
+      courseLocation: 'items/6qHd9kjJMcUgyIso/story.html',
       contentType: ContentType.STORYLINE,
       sub: '109297358012991804394'
     },
@@ -109,11 +110,12 @@ const dbInit = async () => {
       endAt: new Date(2023, Month.April, 12, 11, 38, 55),
     },
     {
-      testUUID: '3a8fccb1-9113-43f4-b410-e10eb947e33a',
-      name: 'WIP test of \'xAPI_simple\' (version 7)',
+      testUUID: '2103f39a-2976-4cbc-9660-f2d48239f48a',
+      name: 'The only source of truth',
       courseUUID: '5e06909d-12ff-4c50-a460-c28d9eca69b7',
-      // no start -> 'WIP' (no chip)
-      createdAt: new Date(2023, Month.April, 14, 12, 13, 2),
+      createdAt: new Date(2023, Month.March, 17, 12, 13, 2),
+      startAt: new Date(2023, Month.March, 18, 8, 0, 0),
+      endType: EndType.MANUAL,
     }
   ], { validate: true })
 
@@ -281,6 +283,24 @@ const dbInit = async () => {
     },
   ], { validate: true })
 
-    //TODO: Assign named testers
+  // create test-tester relations
+  await TesterTest.bulkCreate([
+    {
+      testUUID: 'cfcd95eb-4c13-4432-9a96-1892b4268b97',
+      testerUUID: '86039e02-4edc-4607-a498-207789db36fc'
+    },
+    {
+      testUUID: 'cfcd95eb-4c13-4432-9a96-1892b4268b97',
+      testerUUID: 'b00be129-4e13-414d-b16b-8be8adba3cb2'
+    },
+    {
+      testUUID: 'cfcd95eb-4c13-4432-9a96-1892b4268b97',
+      testerUUID: '2cc1ede9-f9a8-468c-9b12-e248ea7d0bb2'
+    },
+    {
+      testUUID: '2103f39a-2976-4cbc-9660-f2d48239f48a',
+      testerUUID: '153acd8f-f5dc-4ce5-8886-28e24bf4ce57'
+    }
+  ], { validate: true })
 }
 export default dbInit 

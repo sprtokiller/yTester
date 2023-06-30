@@ -5,6 +5,7 @@ import { Tester } from "./Tester";
 import { TesterTest } from "./TesterTest";
 import { Course } from "./Course";
 import { Module_1 } from "./Module_1";
+import { XRecord } from "./XRecord";
 
 @Table
 export class Test extends Model {
@@ -30,7 +31,7 @@ export class Test extends Model {
   createdAt!: Date;
   
   @Column
-  startAt?: Date;
+  startAt!: Date;
 
   @IsIn([Object.values(EndType)])
   @Column({
@@ -48,6 +49,9 @@ export class Test extends Model {
 
   @HasMany(() => AnonymousTester)
   anonymousTesters?: AnonymousTester[];
+
+  @HasMany(() => XRecord)
+  xrecords?: XRecord[];
 
   @HasOne(() => Module_1, { onDelete: 'CASCADE' })
   m1?: Module_1;

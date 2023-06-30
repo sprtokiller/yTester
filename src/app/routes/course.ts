@@ -23,6 +23,27 @@ router.get('/list', checkSession, async function (req: Request, res: Response) {
     })
 })
 
+// TODO: Check if the test is accessible
+router.get('/location/:testUUID', async function (req: Request, res: Response) {
+    try {
+        const test = await Test.findOne({
+            where: { testUUID: req.params.testUUID },
+            include: [
+                // { model: Module_1 },
+                { model: Course, attributes: ['courseLocation'] },
+            ]
+        })
+        
+        if (!test || !test.course.courseLocation) {
+            return res.status(CODE.NOT_FOUND).send(PHRASES.NOT_FOUND);
+        }
+        
+        return res.status(CODE.OK).send(test.course.courseLocation);
+    } catch (err) {
+        return errorHandle(err, res);
+    }
+})
+
 // [R] GET for course detail
 router.get('/detail/:courseUUID', checkSession, async function (req: Request, res: Response) {
     try {
@@ -147,7 +168,6 @@ router.delete('/delete/:courseUUID', checkSession, async function (req: Request,
 // GET route for checking if course name is unique
 router.get('/check/:groupHash/:courseLocation', checkSession, async function (req: Request, res: Response) {
     try {
-        console.log(req.params.groupHash, req.params.courseLocation, req.session.sub);
         const course = await Course.findOne({
             where: { groupHash: req.params.groupHash, courseLocation: req.params.courseLocation, sub: req.session.sub },
         });

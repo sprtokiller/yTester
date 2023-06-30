@@ -1,4 +1,4 @@
-import { Model, Column, Table, PrimaryKey, AllowNull, IsUUID, BelongsToMany, HasMany, ForeignKey } from "sequelize-typescript";
+import { Model, Column, Table, PrimaryKey, AllowNull, IsUUID, BelongsToMany, ForeignKey } from "sequelize-typescript";
 import { Tester } from "./Tester";
 import { AnonymousTester } from "./AnonymousTester";
 import { TesterGroup } from "./TesterGroup";
