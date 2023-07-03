@@ -300,6 +300,10 @@ const dbInit = async () => {
     {
       testUUID: '2103f39a-2976-4cbc-9660-f2d48239f48a',
       testerUUID: '153acd8f-f5dc-4ce5-8886-28e24bf4ce57'
+    },
+    {
+      testUUID: '2103f39a-2976-4cbc-9660-f2d48239f48a',
+      testerUUID: '86039e02-4edc-4607-a498-207789db36fc'
     }
   ], { validate: true })
 }
